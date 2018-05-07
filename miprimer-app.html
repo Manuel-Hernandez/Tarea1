@@ -1,0 +1,81 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="miprimer-app">
+  
+  <template>
+    <style>
+      :host {
+        display: block;
+        color: red;
+      }
+
+    </style>
+    <p on-click="cambia">click</p>
+    <h1>Hello [[prop1]]!</h1>
+    <h1>Hello [[nombre]] [[apellido]]</h1>
+    <h1>Hello [[completo]]!</h1>
+  </template>
+
+  <script>
+    /**
+     * `miprimer-app`
+     * clase1
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class MiprimerApp extends Polymer.Element {
+      static get is() { return 'miprimer-app'; }
+      static get properties() {
+        return {
+          prop1: {  /*si tiene _ la propiedad es protegida    y sin guon bajo es publica  __privada*/
+            type: String,
+            value: 'miprimer-app',
+            reflectToAttribute: true, /*muestra la propiedad en el inspeccionador de elementos de los navegadores*/
+            readOnly:true, /*solo lectura y alguien mas no puede editar esta propiedad*/
+            notify:true,   /*decirle al componente que propiedades queremos que salgan*/
+                           /*que tenga datos compuestos*/
+                           /*observa que pase*/
+          },
+          nombre: {  /*si tiene _ la propiedad es protegida    y sin guon bajo es publica  -privada*/
+            type: String,
+            value: 'Manuel',
+            observer: '_observaNombre'/*no lleva parentesis observador a nivel propiedad*/
+          },
+          apellido: { 
+            type: String,
+            value: 'Hernandez'
+          },
+          completo: { 
+            type: String,
+            computed: '_nombrecompleto()'
+          }
+        };
+      }
+
+      static get observers(){
+        return ['_escuchadorGeneral(nombre,apellido,completo)']
+      }
+      _escuchadorGeneral(nombre,apellido,completo){
+        console.log(nombre)
+        console.log(apellido)
+        console.log(completo)
+
+      }
+
+      _nombrecompleto ()
+       {
+        return `${this.nombre} ${this.apellido}`
+       }
+       _observaNombre(nombre){
+        console.log(nombre);
+        
+       }
+       cambia(){
+        this.set('nombre','seas mamon')
+       }
+}
+    window.customElements.define(MiprimerApp.is, MiprimerApp);
+  </script>
+</dom-module>

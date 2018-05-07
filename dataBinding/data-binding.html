@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="data-binding">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `data-binding`
+     * polymer starter kit databingid
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class DataBinding extends Polymer.Element {
+      static get is() { return 'data-binding'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'data-binding'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(DataBinding.is, DataBinding);
+  </script>
+</dom-module>

@@ -1,0 +1,82 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../iron-collapse/iron-collapse.html">
+<dom-module id="tarea2-dificil">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <paper-button on-click="MostartDatos">CONSULTA DE DEPARTAMENTOS</paper-button>
+    
+    <iron-ajax
+        id="mostrar"
+        url="http://demo6292426.mockable.io/c-properties"
+        handle-as="json"
+        on-response="handleResponse"
+        debounce-duration="300">
+    </iron-ajax>
+
+
+    <template is="dom-repeat" items="[[propiedades]]">
+       
+       <paper-card heading="Departamento en Calle [[item.nombre]]" style="width: 100%">
+           <div class="card-content">
+                <paper-input label="Precio de venta:" value="[[item.precio]]"></paper-input>
+                <p>Precio de Renta: [[item.rent]]</p>  
+           </div>
+           <div class="card-actions">
+           <paper-button id="button" on-click="toggle" >VER DETALLES DEL DEPARTAMENTO</paper-button>
+              <iron-collapse id="collapse">
+                 <div><p>[[item.descripcion]]</p></div>
+               </iron-collapse> 
+           </div>
+
+
+        </paper-card>
+
+    </template>
+  </template>
+
+  <script>
+    /**
+     * `tarea2-dificil`
+     * consumiento api rest con validaciones
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class Tarea2Dificil extends Polymer.Element {
+      static get is() { return 'tarea2-dificil'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'tarea2-dificil'
+          }
+          
+        };
+      }
+
+      MostartDatos(){
+      this.$.mostrar.generateRequest();
+      }
+      handleResponse(evento){
+           console.log(evento.detail.response); /*request*/
+           this.set('propiedades',evento.detail.response.Propiedades);
+      }
+      toggle() {
+             this.$.collapse.toggle();
+            }
+     
+    }
+
+    window.customElements.define(Tarea2Dificil.is, Tarea2Dificil);
+  </script>
+</dom-module>

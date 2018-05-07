@@ -1,0 +1,97 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<dom-module id="consumiendo-elementos">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-button{
+        --paper-button-ink-color:red; /*propiedad a nivel estilos*/
+        --paper-button:{      
+            background:blue; /*se sustituye todo lo de host con */  
+          }
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+
+<template is="dom-repeat" items="[[propiedades]]"> 
+       <p>[[item.precio]]</p>
+   </template>
+    
+<paper-card image="demo/donuts.png">
+  <div class="card-content">
+    <div class="cafe-header">Cafe Basilico
+      <div class="cafe-location cafe-light">
+        <iron-icon icon="communication:location-on"></iron-icon>
+        <span>250ft</span>
+      </div>
+    </div>
+    <div class="cafe-rating">
+      <iron-icon class="star" icon="star"></iron-icon>
+      <iron-icon class="star" icon="star"></iron-icon>
+      <iron-icon class="star" icon="star"></iron-icon>
+      <iron-icon class="star" icon="star"></iron-icon>
+      <iron-icon class="star" icon="star"></iron-icon>
+    </div>
+    <p>$・Italian, Cafe</p>
+    <p class="cafe-light">Small plates, salads &amp; sandwiches in an intimate setting.</p>
+  </div>
+  <div class="card-actions">
+    <div class="horizontal justified">
+      <paper-icon-button icon="icons:event"></paper-icon-button>
+      <paper-button>5:30PM</paper-button>
+      <paper-button>7:30PM</paper-button>
+      <paper-button>9:00PM</paper-button>
+      <paper-button class="cafe-reserve">Reserve</paper-button>
+    </div>
+  </div>
+</paper-card>
+
+    <paper-input label="nombre"></paper-input>
+    <paper-button>Guardar</paper-button>
+    <paper-button toggles raised><iron-icon icon="favorite"></iron-icon>toggles</paper-button>
+
+<iron-ajax
+    auto
+    url="http://demo6292426.mockable.io/c-properties"
+    handle-as="json"
+    on-response="handleResponse"
+    debounce-duration="300">
+</iron-ajax>
+   
+   
+
+  </template>
+
+  <script>
+    /**
+     * `consumiendo-elementos`
+     * consumiendo elementos de terceras personas
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ConsumiendoElementos extends Polymer.Element {
+      static get is() { return 'consumiendo-elementos'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'consumiendo-elementos'
+          }
+        };
+      }
+      handleResponse(evento){
+           console.log(evento.detail.response); /*request*/
+           this.set('propiedades',evento.detail.response.Propiedades);
+      }
+    }
+
+    window.customElements.define(ConsumiendoElementos.is, ConsumiendoElementos);
+  </script>
+</dom-module>
